@@ -32,7 +32,7 @@ app.on 'ready', ->
         data = JSON.parse body
         weather = data.weather
         tray.setContextMenu createMenu()
-        isRaining = weather.id <= 500 && 600 < weather.id
+        isRaining = 500 <= weather.id && weather.id < 600
         tray.setImage if isRaining then ICON_RED else ICON_GRAY
 
   app.dock?.hide()
