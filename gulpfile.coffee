@@ -59,5 +59,6 @@ gulp.task 'icon-app', ->
     export: 'artboards'
     scales: '1.0'
     formats: 'png'
+  .pipe gulp.dest $.dist
   .pipe iconutil 'app.icns'
   .pipe gulp.dest $.dist
