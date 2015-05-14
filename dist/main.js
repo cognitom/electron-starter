@@ -25,10 +25,10 @@
 
   ICON_GRAY = path.join(__dirname, 'tray-gray.png');
 
-  createMenu = function(desc) {
+  createMenu = function(id) {
     return Menu.buildFromTemplate([
       {
-        label: "Weather Detail...",
+        label: "Weather Detail(" + id + ")...",
         click: function() {
           return shell.openExternal(DETAIL_URL);
         }
@@ -48,13 +48,13 @@
     tray = new Tray(ICON_GRAY);
     checkRaining = function() {
       return request(API_URL, function(err, res, body) {
-        var data, isRaining, weather;
+        var data, id, isRaining;
         if (!err) {
           data = JSON.parse(body);
-          weather = data.weather;
-          tray.setContextMenu(createMenu());
-          isRaining = weather.id <= 500 && 600 < weather.id;
-          return tray.setImage(isRaining ? ICON_RED : ICON_GRAY);
+          id = data.weather[0].id - 0;
+          isRaining = 500 <= id && id < 600;
+          tray.setImage(isRaining ? ICON_RED : ICON_GRAY);
+          return tray.setContextMenu(createMenu(id));
         }
       });
     };
